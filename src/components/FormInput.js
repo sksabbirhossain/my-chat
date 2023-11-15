@@ -1,8 +1,15 @@
 import React from "react";
 
-export const FormInput = ({ label, type, name, placeholder, className }) => {
+export const FormInput = ({
+  label,
+  type,
+  name,
+  placeholder,
+  className,
+  ...rest
+}) => {
   return (
-    <div className="block space-y-2 pb-4">
+    <div className="block space-y-2 pt-3">
       <div>
         <label
           htmlFor=""
@@ -16,6 +23,7 @@ export const FormInput = ({ label, type, name, placeholder, className }) => {
         name={name}
         placeholder={placeholder}
         className={`${className} border-2 border-gray-300 focus:outline-orange-600 rounded px-1 py-2 w-full`}
+        {...rest}
       />
     </div>
   );
