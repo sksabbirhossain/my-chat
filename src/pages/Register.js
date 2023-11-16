@@ -25,6 +25,11 @@ export const Register = () => {
     if (!isLoading && isError && responseError?.data?.errors) {
       setError(responseError?.data?.errors);
     }
+
+    if (!isLoading && responseError?.error) {
+      setCommonError(responseError?.error);
+    }
+
     if (!isLoading && isSuccess) {
       toast.success("Register successful, please login");
       navigate("/");
@@ -68,7 +73,7 @@ export const Register = () => {
             </p>
           </div> */}
           {commonError !== "" && (
-            <p className="text-gray-900 bg-red-300 rounded py-2 px-1 mb-2">
+            <p className="text-black bg-red-400 rounded py-2 px-1 mb-2">
               {commonError}
             </p>
           )}
