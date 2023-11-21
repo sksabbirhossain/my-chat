@@ -10,5 +10,9 @@ export const PrivateRoute = ({ children }) => {
   const userInfo = useSelector(selectUserInfo);
   const accessToken = useSelector(selectUserAccessToken);
 
-  return userInfo && accessToken ? <children /> : <Navigate to="/" />;
+  return userInfo !== undefined && accessToken !== undefined ? (
+    children
+  ) : (
+    <Navigate to="/" />
+  );
 };

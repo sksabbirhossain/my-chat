@@ -10,5 +10,9 @@ export const PublicRoute = ({ children }) => {
   const userInfo = useSelector(selectUserInfo);
   const accessToken = useSelector(selectUserAccessToken);
 
-  return userInfo && accessToken ? <Navigate to="/inbox" /> : <children />;
+  return userInfo !== undefined && accessToken !== undefined ? (
+    <Navigate to="/inbox" />
+  ) : (
+    children
+  );
 };
