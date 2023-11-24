@@ -25,7 +25,7 @@ export const ConversationItem = ({ conversation }) => {
                 {participant.name}
               </h4>
               <p className="text-xs font-normal text-gray-600">
-                {last_message}
+                {last_message?.substring(0, 15)}
               </p>
             </div>
           </div>
