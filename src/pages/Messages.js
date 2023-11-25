@@ -1,11 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import SendIcon from "../assets/icons/SendIcon";
-import { Button } from "../components/Button";
-import { Form } from "../components/Form";
-import { FormInput } from "../components/FormInput";
 import { MessageBox } from "../components/MessageBox";
 import { MessageHeader } from "../components/MessageHeader";
+import { SendMessageBox } from "../components/SendMessageBox";
 import { useGetMessagesQuery } from "../features/messages/messagesApi";
 
 export const Messages = () => {
@@ -14,7 +11,6 @@ export const Messages = () => {
     data: messages,
     isLoading,
     isSuccess,
-    error,
     isError,
   } = useGetMessagesQuery(conversationId);
 
@@ -46,20 +42,7 @@ export const Messages = () => {
         {content}
       </div>
       {/* send message form */}
-      <div className="bg-white px-2 mt-1 rounded">
-        <Form className="flex justify-between items-center">
-          <div className="w-full">
-            <FormInput
-              type="text"
-              name="message"
-              placeholder="Write message..."
-            />
-          </div>
-          <div className="-mt-2">
-            <Button name={<SendIcon />} className="text-xl" />
-          </div>
-        </Form>
-      </div>
+      <SendMessageBox info={messages[0]} />
     </div>
   );
 };

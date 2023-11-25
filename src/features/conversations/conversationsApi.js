@@ -7,6 +7,11 @@ export const conversationsApi = apiSlice.injectEndpoints({
         url: `/conversation/all?userid=${userid}`,
       }),
     }),
+    getConversation: builder.query({
+      query: () => ({
+        url:`/conversation/all?userid=${userid}`,
+      })
+    })
   }),
 });
 
