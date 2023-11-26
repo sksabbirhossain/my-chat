@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "../features/auth/authSelector";
 import { useGetConversationsQuery } from "../features/conversations/conversationsApi";
 import { ConversationHeader } from "./ConversationHeader";
 import { ConversationItem } from "./ConversationItem";
+import { Modal } from "./Modal";
 
 export const Conversations = () => {
+  const [open, setOpen] = useState(false);
   const user = useSelector(selectUserInfo);
-  const { data, isLoading, isError, error, isSuccess } =
-    useGetConversationsQuery(user?._id);
+  const { data, isLoading, isError, isSuccess } = useGetConversationsQuery(
+    user?._id
+  );
+
+  // open add conversation modal
+  const control = () => {
+    setOpen((prev) => !prev);
+  };
+
   //deside what to render
   let content;
 
@@ -39,10 +48,14 @@ export const Conversations = () => {
       </div>
       {/* add conversations */}
       <div className="absolute bottom-0 right-5">
-        <button className="bg-orange-600 hover:bg-orange-700 text-white duration-150 px-4 py-2 rounded-full text-2xl">
+        <button
+          className="bg-orange-600 hover:bg-orange-700 text-white duration-150 px-4 py-2 rounded-full text-2xl"
+          onClick={control}
+        >
           +
         </button>
       </div>
+      {open && <Modal open={open} control={control} />}
     </div>
   );
 };
