@@ -8,11 +8,30 @@ export const conversationsApi = apiSlice.injectEndpoints({
       }),
     }),
     getConversation: builder.query({
-      query: () => ({
-        url:`/conversation/all?userid=${userid}`,
-      })
-    })
+      query: ({ userid, participantid }) => ({
+        url: `/conversation?userid=${userid}&&participantid=${participantid}`,
+      }),
+    }),
+    addConversation: builder.mutation({
+      query: (data) => ({
+        url: `/conversation/add`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    editConversation: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/conversation/update/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetConversationsQuery } = conversationsApi;
+export const {
+  useGetConversationsQuery,
+  useGetConversationQuery,
+  useAddConversationMutation,
+  useEditConversationMutation,
+} = conversationsApi;
