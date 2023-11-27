@@ -24,7 +24,7 @@ export const Messages = () => {
   }
 
   if (!isLoading && !isError && isSuccess && messages?.length === 0) {
-    content = <div>No Conversations found!</div>;
+    content = <div>No messages found!</div>;
   }
 
   if (!isLoading && !isError && isSuccess && messages?.length > 0) {
@@ -35,7 +35,7 @@ export const Messages = () => {
 
   return (
     <div className="pl-[390px] w-full rounded">
-      <MessageHeader info={messages} />
+      <MessageHeader info={messages[0]} />
       <div className="bg-white mt-1 rounded px-2  h-[74vh] overflow-y-auto">
         {/* message container */}
 
