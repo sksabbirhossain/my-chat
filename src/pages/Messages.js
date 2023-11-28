@@ -36,7 +36,7 @@ export const Messages = () => {
   return (
     <div className="pl-[390px] w-full rounded">
       <MessageHeader info={messages[0]} />
-      <div className="bg-white mt-1 rounded px-2  h-[74vh] overflow-y-auto">
+      <div className="bg-white mt-1 rounded px-2  h-[74vh] overflow-y-auto flex flex-col-reverse">
         {/* message container */}
 
         {content}

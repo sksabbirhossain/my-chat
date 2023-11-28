@@ -21,10 +21,10 @@ export const conversationsApi = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
-          //add message
           const { data } = await queryFulfilled;
           if (data?._id) {
-            dispatch(
+            //add message
+            const res = await dispatch(
               messagesApi.endpoints.addMessage.initiate({
                 id: data?._id,
                 data: {
@@ -35,6 +35,16 @@ export const conversationsApi = apiSlice.injectEndpoints({
                   date_time: data.last_updated,
                 },
               })
+            ).unwrap();
+
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getConversations",
+                res.sender.id,
+                (draft) => {
+                  draft.unshift(data);
+                }
+              )
             );
           }
         } catch (err) {}
@@ -47,11 +57,26 @@ export const conversationsApi = apiSlice.injectEndpoints({
         body: data,
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        // optimistic update
+        const result = dispatch(
+          apiSlice.util.updateQueryData(
+            "getConversations",
+            arg.data.creator.id,
+            (draft) => {
+              const draftConversation = draft.find(
+                (item) => item._id === arg.id
+              );
+              draftConversation.last_message = arg.data.last_message;
+              draftConversation.last_updated = arg.data.last_updated;
+            }
+          )
+        );
+
         try {
           //add message
           const { data } = await queryFulfilled;
           if (data?._id) {
-            dispatch(
+            const res = await dispatch(
               messagesApi.endpoints.addMessage.initiate({
                 id: data?._id,
                 data: {
@@ -62,9 +87,21 @@ export const conversationsApi = apiSlice.injectEndpoints({
                   date_time: data.last_updated,
                 },
               })
+            ).unwrap();
+
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getMessages",
+                res.conversation_id,
+                (draft) => {
+                  draft.unshift(res);
+                }
+              )
             );
           }
-        } catch (err) {}
+        } catch (err) {
+          result.undo();
+        }
       },
     }),
   }),

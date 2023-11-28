@@ -29,14 +29,16 @@ export const ConversationItem = ({ conversation }) => {
             <div className="w-full">
               <div className="flex items-center justify-between">
                 <h4 className="text-base font-medium capitalize text-gray-900">
-                  {participantInfo.name}
+                  {participantInfo?.name}
                 </h4>
                 <p className="text-xs font-medium text-black ">
                   {moment(last_updated).fromNow()}
                 </p>
               </div>
               <p className="text-xs font-normal text-gray-600">
-                {`${last_message.substring(0, 80)}${last_message.length > 80 ? "...": ""}`}
+                {`${last_message?.substring(0, 80)}${
+                  last_message?.length > 80 ? "..." : ""
+                }`}
               </p>
             </div>
           </div>
